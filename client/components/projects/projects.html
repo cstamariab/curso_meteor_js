@@ -3,25 +3,33 @@
         <div class="col s12">
 
             <h2>Mis proyectos</h2>
+
+
+
             <a href="{{pathFor 'project_form'}}" class="btn">
                 Añadir nuevo proyecto
             </a>
+            {{> EasySearch.Input index=projects }}
             <ul class="collection with-header">
-                {{#if projects.count}}
-                    {{#each projects}}
-                        <li class="collection-item">
-                            <div>
-                                {{name}}
+                {{#EasySearch.Each index=projects }}
+                    <li class="collection-item">
+                        <div>
+                            {{name}}
+                            {{>project_links}}
+                        </div>
+                    </li>
+                {{/EasySearch.Each}}
 
-                                {{>project_links}}
-                            </div>
-                        </li>
-                    {{/each}}
-                {{else}}
-                    <li>No tienes ningun proyecto</li>
-                {{/if}}
+                {{#EasySearch.IfNoResults index=projects}}
+                    <li class="collection-item">No hay resultados...</li>
+                {{/EasySearch.IfNoResults}}
+
+                {{#EasySearch.IfSearching index=projects}}
+                    <li class="collection-item">Buscando...</li>
+                {{/EasySearch.IfSearching}}
             </ul>
 
+            {{>EasySearch.Pagination index=projects}}
         </div>
     </div>
 </template>
